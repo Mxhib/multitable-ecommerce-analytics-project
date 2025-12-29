@@ -58,6 +58,16 @@ CREATE TABLE df_products (
     product_width_cm NUMERIC(10,2)
 );
 
+--Staging table for products(raw csv contains duplicates)
+CREATE TABLE stg_products (
+  product_id            VARCHAR(50),
+  product_category_name VARCHAR(100),
+  product_weight_g      NUMERIC(10,2),
+  product_length_cm     NUMERIC(10,2),
+  product_height_cm     NUMERIC(10,2),
+  product_width_cm      NUMERIC(10,2)
+);
+
 -- Payments table Each row represents a payment made for an order
 
 CREATE TABLE df_payments (
@@ -69,3 +79,9 @@ CREATE TABLE df_payments (
     PRIMARY KEY (order_id, payment_sequential)
 );
 
+
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_schema = 'ecomm_analytics'
+  AND table_name = 'df_products'
+ORDER BY ordinal_position;
