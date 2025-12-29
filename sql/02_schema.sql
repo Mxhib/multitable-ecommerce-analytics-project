@@ -47,4 +47,25 @@ CREATE TABLE df_order_items (
     PRIMARY KEY (order_id, product_id)
 );
 
+-- Products table Contains product-level attributes such as category and physical dimensions
+
+CREATE TABLE df_products (
+    product_id VARCHAR(50) PRIMARY KEY,
+    product_category_name VARCHAR(100),
+    product_weight_g INTEGER,
+    product_length_cm INTEGER,
+    product_height_cm INTEGER,
+    product_width_cm INTEGER
+);
+
+-- Payments table Each row represents a payment made for an order
+
+CREATE TABLE df_payments (
+    order_id VARCHAR(50),
+    payment_sequential INTEGER,
+    payment_type VARCHAR(30),
+    payment_installments INTEGER,
+    payment_value NUMERIC(10,2),
+    PRIMARY KEY (order_id, payment_sequential)
+);
 
