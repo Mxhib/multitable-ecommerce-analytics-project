@@ -36,4 +36,15 @@ CREATE TABLE df_Orders (
   order_estimated_delivery_date DATE
 );
 
+--  Order items table Each row represents a product included in an order
+CREATE TABLE df_order_items (
+    order_id VARCHAR(50),
+    product_id VARCHAR(50),
+    seller_id VARCHAR(50),
+    price NUMERIC(10,2),
+    shipping_charges NUMERIC(10,2),
+
+    PRIMARY KEY (order_id, product_id)
+);
+
 
