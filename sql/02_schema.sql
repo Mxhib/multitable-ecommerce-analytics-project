@@ -9,11 +9,11 @@ SET SEARCH_PATH to ecomm_analytics;
 
 -- Drop the table if it already exists so this script can be safely re-run from scratch
 
-DROP TABLE IF EXISTS payments;
-DROP TABLE IF EXISTS order_items;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS df_payments;
+DROP TABLE IF EXISTS df_order_items;
+DROP TABLE IF EXISTS df_orders;
+DROP TABLE IF EXISTS df_products;
+DROP TABLE IF EXISTS df_customers;
 
 -- Customers table
 
@@ -26,7 +26,7 @@ CREATE TABLE df_customers (
 
 -- Orders table (each row is an order placed by a customer)
 
-CREATE TABLE df_Orders (
+CREATE TABLE df_orders (
   order_id                      VARCHAR(50) PRIMARY KEY,
   customer_id                   VARCHAR(50),
   order_status                  VARCHAR(30),
@@ -52,10 +52,10 @@ CREATE TABLE df_order_items (
 CREATE TABLE df_products (
     product_id VARCHAR(50) PRIMARY KEY,
     product_category_name VARCHAR(100),
-    product_weight_g INTEGER,
-    product_length_cm INTEGER,
-    product_height_cm INTEGER,
-    product_width_cm INTEGER
+    product_weight_g NUMERIC(10,2),
+    product_length_cm NUMERIC(10,2),
+    product_height_cm NUMERIC(10,2),
+    product_width_cm NUMERIC(10,2)
 );
 
 -- Payments table Each row represents a payment made for an order
