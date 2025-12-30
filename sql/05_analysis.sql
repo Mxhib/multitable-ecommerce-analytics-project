@@ -143,5 +143,35 @@ SELECT
     MAX(order_revenue)        AS max_order_value
 FROM order_rollup;
 
+-- Payment method breakdown (needs df_payments)
+WITH fact_order_items AS (
+    SELECT
+        oi.order_id,
+        o.customer_id,
+        o.order_purchase_timestamp,
+        oi.product_id,
+        p.product_category_name,
+        (oi.price + oi.shipping_charges) AS item_revenue
+    FROM ecomm_analytics.df_order_items oi
+    JOIN ecomm_analytics.df_orders   o ON o.order_id = oi.order_id
+    JOIN ecomm_analytics.df_products p ON p.product_id = oi.product_id
+),
+order_revenue AS (
+    SELECT
+        order_id,
+        SUM(item_revenue) AS order_revenue
+    FROM fact_order_items
+    GROUP BY 1
+)
+SELECT
+    pay.payment_type,
+    COUNT(DISTINCT pay.order_id) AS orders,
+    SUM(orv.order_revenue)       AS revenue
+FROM ecomm_analytics.df_payments pay
+JOIN order_revenue orv ON orv.order_id = pay.order_id
+GROUP BY 1
+ORDER BY revenue DESC;
+
+
 
 
