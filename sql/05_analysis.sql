@@ -53,5 +53,33 @@ SELECT
     MAX(item_revenue) AS max_item_revenue
 FROM fact_order_items;
 
+-- Top 20 products by revenue descending with category and times sold
+
+WITH fact_order_items AS (
+    SELECT
+        oi.order_id,
+        o.customer_id,
+        o.order_purchase_timestamp,
+        oi.product_id,
+        p.product_category_name,
+        oi.price,
+        oi.shipping_charges,
+        (oi.price + oi.shipping_charges) AS item_revenue
+
+    FROM ecomm_analytics.df_order_items oi
+    JOIN ecomm_analytics.df_orders   o ON o.order_id = oi.order_id
+    JOIN ecomm_analytics.df_products p ON p.product_id = oi.product_id
+)
+SELECT
+    product_id,
+    COALESCE(product_category_name, 'unknown') AS category,
+    COUNT(*)                                   AS times_sold,
+    SUM(item_revenue)                          AS revenue
+
+FROM fact_order_items
+GROUP BY product_id, category
+ORDER BY revenue DESC
+LIMIT 20;
+
 
 
