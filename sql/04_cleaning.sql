@@ -86,3 +86,28 @@ SELECT
   ) THEN 'FAIL ' ELSE 'PASS ' END;
 
 
+-- NULL / missing value checks
+
+SELECT
+  SUM(CASE WHEN customer_id IS NULL THEN 1 ELSE 0 END) AS null_customer_id
+FROM df_customers;
+
+SELECT
+  SUM(CASE WHEN order_id IS NULL THEN 1 ELSE 0 END) AS null_order_id,
+  SUM(CASE WHEN customer_id IS NULL THEN 1 ELSE 0 END) AS null_customer_id
+FROM df_orders;
+
+SELECT
+  SUM(CASE WHEN product_id IS NULL THEN 1 ELSE 0 END) AS null_product_id
+FROM df_products;
+
+SELECT
+  SUM(CASE WHEN order_id IS NULL THEN 1 ELSE 0 END) AS null_order_id,
+  SUM(CASE WHEN product_id IS NULL THEN 1 ELSE 0 END) AS null_product_id
+FROM df_order_items;
+
+SELECT
+  SUM(CASE WHEN order_id IS NULL THEN 1 ELSE 0 END) AS null_order_id
+FROM df_payments;
+
+-
