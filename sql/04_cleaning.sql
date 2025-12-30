@@ -110,4 +110,33 @@ SELECT
   SUM(CASE WHEN order_id IS NULL THEN 1 ELSE 0 END) AS null_order_id
 FROM df_payments;
 
+-- range / checks for any weird values
+
+-- Price + shipping should not be negative
+SELECT
+  'order_items.non_negative_price_shipping' AS check_name,
+  CASE
+    WHEN COUNT(*) = 0 THEN 'PASS'
+    ELSE 'FAIL'
+  END AS result,
+  COUNT(*) AS bad_rows
+FROM df_order_items
+WHERE price < 0
+   OR shipping_charges < 0;
+
+
+-- Product dimensions should not be negative
+SELECT
+  'products.non_negative_dimensions' AS check_name,
+  CASE
+    WHEN COUNT(*) = 0 THEN 'PASS'
+    ELSE 'FAIL'
+  END AS result,
+  COUNT(*) AS bad_rows
+FROM df_products
+WHERE product_weight_g < 0
+   OR product_length_cm < 0
+   OR product_height_cm < 0
+   OR product_width_cm < 0;
+
 -
