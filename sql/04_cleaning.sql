@@ -165,9 +165,14 @@ SELECT COUNT(*) AS payments_missing_order
 FROM ecomm_analytics.df_payments pay
 LEFT JOIN df_orders o ON o.order_id = pay.order_id
 WHERE o.order_id IS NULL;
+ 
 
-
-
-
-
--
+ -- =========================================================
+-- Summary: should all be 0
+-- =========================================================
+SELECT
+  (SELECT COUNT(*) FROM ecomm_analytics.df_customers WHERE customer_id IS NULL) AS null_customer_id,
+  (SELECT COUNT(*) FROM ecomm_analytics.df_orders WHERE order_id IS NULL OR customer_id IS NULL) AS null_orders_keys,
+  (SELECT COUNT(*) FROM ecomm_analytics.df_products WHERE product_id IS NULL) AS null_product_id,
+  (SELECT COUNT(*) FROM ecomm_analytics.df_order_items WHERE order_id IS NULL OR product_id IS NULL) AS null_order_items_keys,
+  (SELECT COUNT(*) FROM ecomm_analytics.df_payments WHERE order_id IS NULL) AS null_payments_order_id;
