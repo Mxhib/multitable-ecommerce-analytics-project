@@ -1,0 +1,2 @@
+-- 04_data_quality.sql
+-- Purpose: data quality checks + light cleaning helpers (no loading)
