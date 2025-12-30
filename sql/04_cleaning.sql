@@ -139,4 +139,35 @@ WHERE product_weight_g < 0
    OR product_height_cm < 0
    OR product_width_cm < 0;
 
+   -- relationship checks
+
+-- Orders referencing missing customers
+SELECT COUNT(*) AS orders_missing_customer
+FROM ecomm_analytics.df_orders o
+LEFT JOIN df_customers c ON c.customer_id = o.customer_id
+WHERE c.customer_id IS NULL;
+
+
+-- Order items referencing missing orders
+SELECT COUNT(*) AS order_items_missing_order
+FROM ecomm_analytics.df_order_items oi
+LEFT JOIN df_orders o ON o.order_id = oi.order_id
+WHERE o.order_id IS NULL;
+
+-- Order items referencing missing products
+SELECT COUNT(*) AS order_items_missing_product
+FROM ecomm_analytics.df_order_items oi
+LEFT JOIN df_products p ON p.product_id = oi.product_id
+WHERE p.product_id IS NULL;
+
+-- Payments referencing missing orders
+SELECT COUNT(*) AS payments_missing_order
+FROM ecomm_analytics.df_payments pay
+LEFT JOIN df_orders o ON o.order_id = pay.order_id
+WHERE o.order_id IS NULL;
+
+
+
+
+
 -
