@@ -23,6 +23,7 @@ The final output is an **Executive Overview Dashboard** designed for non-technic
 ---
 
 ## Tableau Executive Dashboard
+![image alt](https://github.com/Mxhib/multitable-ecommerce-analytics-project/blob/main/Dashboard.png?raw=true)
 
 ### Dashboard Purpose
 
